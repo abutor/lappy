@@ -27,6 +27,6 @@ jobs:
     - name: Test
       run: dotnet test --configuration Release /p:Version=${{ env.VERSION }} --no-build --verbosity normal
     - name: Pack
-      run: dotnet pack Lappy.Cluster --configuration Release /p:Version=${{ env.VERSION }} --no-build --output .
+      run: dotnet pack --configuration Release /p:Version=${{ env.VERSION }} --no-build --output .
     - name: Push
-      run: dotnet nuget push ${{ env.IMAGE_NAME }}.${{ env.VERSION }}.nupkg --source https://nuget.pkg.github.com/abutor/index.json --api-key ${{ secrets.GITHUB_TOKEN }}
+      run: dotnet nuget push *.${{ env.VERSION }}.nupkg --source https://nuget.pkg.github.com/abutor/index.json --api-key ${{ secrets.GITHUB_TOKEN }}
