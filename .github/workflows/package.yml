@@ -1,7 +1,7 @@
 name: Prebuild
 
 on:
-  pull_request:
+  push:
     branches: [ "main", "dev" ]
 jobs:
   build:
