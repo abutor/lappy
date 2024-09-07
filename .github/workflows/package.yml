@@ -9,6 +9,10 @@ jobs:
       IMAGE_NAME: Lappy.Cluster
       VERSION: 1.0.${{ github.run_number }}
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
 
     steps:
     - uses: actions/checkout@v4
