@@ -10,8 +10,6 @@ public sealed class ClusterOption
     internal string[] RabbitHosts { get; private set; } = [];
     internal string RabbitUrl { get; set; } = string.Empty;
     internal bool IsSingleNode { get; set; } = true;
-    internal Assembly ParentAssembly { get; set; }
-
     internal string Username { get; set; }
     internal string Password { get; set; }
     internal string VHost { get; set; }
@@ -23,12 +21,6 @@ public sealed class ClusterOption
     public ClusterOption WithNodeName(string nodeName)
     {
         NodeQueueName = "node." + nodeName;
-        return this;
-    }
-
-    public ClusterOption WithAssembly(Assembly assembly)
-    {
-        ParentAssembly = assembly;
         return this;
     }
 

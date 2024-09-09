@@ -44,7 +44,9 @@ public static class Extensions
         services.AddPooled(provider => provider.GetRequiredService<IConnection>().CreateModel());
 
         var proxyGenerator = new ProxyGenerator();
-        foreach (var service in options.ParentAssembly.GetTypes())
+        Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
+
+        foreach (var service in assemblies.SelectMany(x => x.GetTypes()))
         {
             if (service.GetCustomAttribute<RemoteServiceAttribute>() == null) continue;
 
