@@ -31,7 +31,7 @@ public static class Extensions
         services.AddServices();
         services.AddSingleton(options);
         services.AddKeyedSingleton(ClusterConstants.QueueHashSetKey, queues);
-        services.AddSingleton(() => new ConnectionFactory
+        services.AddSingleton(c => new ConnectionFactory
         {
             DispatchConsumersAsync = true,
             NetworkRecoveryInterval = TimeSpan.FromMilliseconds(100),
