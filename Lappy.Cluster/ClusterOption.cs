@@ -1,10 +1,19 @@
-﻿namespace Lappy.Cluster;
+﻿using System;
+
+namespace Lappy.Cluster;
 
 public sealed class ClusterOption
 {
     internal string NodeQueueName { get; set; } = $"node.{Guid.NewGuid().ToString("N")[0..8]}";
     internal List<Type> Contexts { get; init; } = [];
-    internal string[] ConnectionStrings { get; private set; } = [];
+    internal string[] RabbitHosts { get; private set; } = [];
+    internal string RabbitUrl { get; set; } = string.Empty;
+    internal bool IsSingleNode { get; set; } = true;
+
+    internal string Username { get; set; }
+    internal string Password { get; set; }
+    internal string VHost { get; set; }
+    internal int Port { get; set; }
     internal byte Priority { get; private set; } = 1;
 
     public ClusterOption() { }
@@ -15,10 +24,22 @@ public sealed class ClusterOption
         return this;
     }
 
-    public ClusterOption UseRabbitMq(params string[] connectionString)
+    //public ClusterOption UseRabbitMq(string username, string password, int port, string vHost, string[] hostnames)
+    //{
+    //    Username = username;
+    //    Password = password;
+    //    Port = port;
+    //    VHost = vHost;
+    //    RabbitHosts = hostnames;
+
+    //    IsSingleNode = false;
+    //    return this;
+    //}
+
+    public ClusterOption UseRabbitMqHosts(string url)
     {
-        if (connectionString.Length == 0) throw new ArgumentException(null, nameof(connectionString));
-        ConnectionStrings = connectionString;
+        RabbitUrl = url;
+        IsSingleNode = true;
         return this;
     }
 

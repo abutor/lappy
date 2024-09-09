@@ -36,11 +36,10 @@ public static class Extensions
             DispatchConsumersAsync = true,
             NetworkRecoveryInterval = TimeSpan.FromMilliseconds(100),
             RequestedHeartbeat = TimeSpan.FromSeconds(30),
-            UserName = "",
-            Password = "",
-            VirtualHost = ""
+            Uri = new Uri(options.RabbitUrl),
         });
-        services.AddSingleton((provider) => provider.GetRequiredService<ConnectionFactory>().CreateConnection(options.ConnectionStrings));
+
+        services.AddSingleton((provider) => provider.GetRequiredService<ConnectionFactory>().CreateConnection());
         services.AddScoped<IMediator, RabbitProvider>();
         services.AddPooled(provider => provider.GetRequiredService<IConnection>().CreateModel());
 
