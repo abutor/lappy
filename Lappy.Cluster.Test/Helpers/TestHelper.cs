@@ -3,6 +3,7 @@ using Lappy.Core.Pool;
 using Microsoft.Extensions.DependencyInjection;
 using NSubstitute;
 using RabbitMQ.Client;
+using System.Reflection;
 
 namespace Lappy.Cluster.Test.Helpers;
 
@@ -13,7 +14,7 @@ internal static class TestHelper
         var services = new ServiceCollection();
         services.AddTransient<ITestingService, TestingService>();
         services.AddScoped<TestRequestContext>();
-        services.AddCluster(c => c.WithNodeName("TEST").WithContext<TestRequestContext>());
+        services.AddCluster(c => c.WithNodeName("TEST").WithContext<TestRequestContext>().WithAssembly(Assembly.GetExecutingAssembly()));
         services.AddPooled(provider =>
         {
             var model = Substitute.For<IModel>();
