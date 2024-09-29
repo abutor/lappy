@@ -6,7 +6,6 @@ using Lappy.Cluster.Providers;
 using Microsoft.Extensions.DependencyInjection;
 using Lappy.Core.Pool;
 using Lappy.Cluster.Helpers;
-using Lappy.Core;
 
 namespace Lappy.Cluster;
 
@@ -44,9 +43,9 @@ public static class Extensions
         services.AddPooled(provider => provider.GetRequiredService<IConnection>().CreateModel());
 
         var proxyGenerator = new ProxyGenerator();
-        Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
 
-        foreach (var service in assemblies.SelectMany(x => x.GetTypes()))
+        var types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes());
+        foreach (var service in types)
         {
             if (service.GetCustomAttribute<RemoteServiceAttribute>() == null) continue;
 
